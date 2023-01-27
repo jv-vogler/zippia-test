@@ -4,10 +4,10 @@
  *
  * For styling I chose styled-components as it is the tool I'm more comfortable with and I set the
  * GlobalStyle for css resets such as margin, padding and box-sizing, and also setting fonts and such.
- * 
+ *
  * Since this application is simple I felt no need to use a state manager like Redux or the ContextAPI.
- * I'm passing the 'companySearch' state to be able to dynamically filter companies that include the
- * string the user types.
+ * I'm passing the 'companySearch' and 'toggleRecent' states to be able to dynamically filter
+ * companies that include the string the user types.
  */
 
 import { useState } from 'react';
@@ -21,12 +21,18 @@ const queryClient = new QueryClient();
 
 const App: React.FC = () => {
   const [companySearch, setCompanySearch] = useState('');
+  const [toggleRecent, setToggleRecent] = useState(false);
 
   return (
     <QueryClientProvider client={queryClient}>
       <GlobalStyle />
-      <Header companySearch={companySearch} setCompanySearch={setCompanySearch} />
-      <JobsList companySearch={companySearch} />
+      <Header
+        companySearch={companySearch}
+        setCompanySearch={setCompanySearch}
+        toggleRecent={toggleRecent}
+        setToggleRecent={setToggleRecent}
+      />
+      <JobsList companySearch={companySearch} toggleRecent={toggleRecent} />
     </QueryClientProvider>
   );
 };
