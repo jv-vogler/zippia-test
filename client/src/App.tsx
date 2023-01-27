@@ -4,8 +4,6 @@
  * 
  * For styling I chose styled-components as it is the tool I'm more comfortable with and I set the
  * GlobalStyle for css resets such as margin, padding and box-sizing, and also setting fonts and such.
- * 
- * I opted for a very simple component structure to begin with since I'm worried about time.
  */
 
 import { QueryClient, QueryClientProvider } from 'react-query';

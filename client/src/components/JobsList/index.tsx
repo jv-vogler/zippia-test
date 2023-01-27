@@ -10,7 +10,16 @@
 
 import { useQuery } from 'react-query';
 import { MagnifyingGlass } from 'react-loader-spinner';
+import styled from 'styled-components'
 import JobCard from '../JobCard';
+
+const SpinnerContainer = styled.div`
+  display: flex;
+  place-content: center;
+  place-items: center;
+  height: 100%;
+  width: 100%;
+`
 
 const JobsList: React.FC = () => {
   const { data, error, isLoading } = useQuery('jobsData', async () => {
@@ -20,16 +29,18 @@ const JobsList: React.FC = () => {
 
   if (isLoading) {
     return (
-      <MagnifyingGlass
-        visible={true}
-        height="80"
-        width="80"
-        ariaLabel="MagnifyingGlass-loading"
-        wrapperStyle={{}}
-        wrapperClass="MagnifyingGlass-wrapper"
-        glassColor="#c0efff"
-        color="#e15b64"
-      />
+      <SpinnerContainer>
+        <MagnifyingGlass
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="MagnifyingGlass-loading"
+          wrapperStyle={{}}
+          wrapperClass="MagnifyingGlass-wrapper"
+          glassColor="#c0efff"
+          color="#ff6000"
+        />
+      </SpinnerContainer>
     );
   }
 
