@@ -1,4 +1,8 @@
-import { FaSearch } from 'react-icons/fa';
+/**
+ * Instead of making an API request I opted to dynamically filter the company names based on what
+ * the user types on the input field.
+ */
+
 import styled from 'styled-components';
 
 const StyledHeader = styled.header`
@@ -13,7 +17,7 @@ const StyledHeader = styled.header`
   color: #f5f5f5;
   background-color: #333;
 
-  @media screen and (max-width: 768px){
+  @media screen and (max-width: 768px) {
     flex-direction: column;
     gap: 20px;
   }
@@ -25,25 +29,8 @@ const Input = styled.input`
   font-size: 1rem;
   border: none;
   outline: none;
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
+  border-radius: 3px;
 `;
-
-const SearchBtn = styled.button`
-  height: 44px;
-  padding: 0px 15px;
-  border: none;
-  outline: none;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-  color: #fff;
-  background-color: #ff6000;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #e23c00;
-  }
-`
 
 const FilterBtn = styled.button`
   padding: 0.5rem 1rem;
@@ -51,15 +38,26 @@ const FilterBtn = styled.button`
   color: #fff;
   background-color: #333;
   cursor: pointer;
-`
+`;
 
-const Header: React.FC = () => {
+type Props = {
+  companySearch: string;
+  setCompanySearch: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const Header: React.FC<Props> = ({ companySearch, setCompanySearch }) => {
   return (
     <StyledHeader>
       <h1>Zippia Test</h1>
       <div>
-        <Input type="text" placeholder="Company name" />
-        <SearchBtn><FaSearch /></SearchBtn>
+        <Input
+          type="text"
+          placeholder="Company name"
+          value={companySearch || ''}
+          onChange={e => {
+            setCompanySearch(e.target.value);
+          }}
+        />
       </div>
       <FilterBtn>Past 7 days</FilterBtn>
     </StyledHeader>

@@ -10,7 +10,7 @@
 
 import { useQuery } from 'react-query';
 import { MagnifyingGlass } from 'react-loader-spinner';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import JobCard from '../JobCard';
 
 const SpinnerContainer = styled.div`
@@ -19,9 +19,13 @@ const SpinnerContainer = styled.div`
   place-items: center;
   height: 100%;
   width: 100%;
-`
+`;
 
-const JobsList: React.FC = () => {
+type Props = {
+  companySearch: string;
+};
+
+const JobsList: React.FC<Props> = ({ companySearch }) => {
   const { data, error, isLoading } = useQuery('jobsData', async () => {
     const res = await fetch('/test/jobs');
     return res.json();
@@ -48,16 +52,34 @@ const JobsList: React.FC = () => {
 
   return (
     <ul>
-      {data.jobs.map(
-        (job: { jobId: string; jobTitle: string; companyName: string; jobDescription: string }) => (
-          <JobCard
-            key={job.jobId}
-            jobTitle={job.jobTitle}
-            jobCompany={job.companyName}
-            jobDescription={job.jobDescription}
-          />
-        )
-      )}
+      {/* 
+        First I filter based on the input the user types and then I map to list the remaining (or
+        all) the jobs.
+      */}
+
+      {data.jobs
+        .filter((job: { companyName: string }) => {
+          if (companySearch === '') {
+            return job;
+          } else if (job.companyName.toLowerCase().includes(companySearch.toLowerCase())) {
+            return job;
+          }
+        })
+        .map(
+          (job: {
+            jobId: string;
+            jobTitle: string;
+            companyName: string;
+            jobDescription: string;
+          }) => (
+            <JobCard
+              key={job.jobId}
+              jobTitle={job.jobTitle}
+              jobCompany={job.companyName}
+              jobDescription={job.jobDescription}
+            />
+          )
+        )}
     </ul>
   );
 };
