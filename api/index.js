@@ -1,6 +1,7 @@
-const express = require('express');
+const app = require('express')();
 const axios = require('axios');
-const app = express();
+const cors = require('cors');
+app.use(cors());
 
 const payload = {
   companySkills: true,
@@ -12,8 +13,8 @@ const payload = {
   previousListingHashes: [],
 };
 
-// Creates an express route to send the data back to the client
-app.get('/test/jobs/', (req, res) => {
+// Makes the request at this endpoint. I had to use the "api" folder to make it work on Vercel
+app.get('/api/test/jobs', (req, res) => {
   axios
     .post('https://www.zippia.com/api/jobs/', payload)
     .then(response => {
@@ -26,3 +27,5 @@ app.get('/test/jobs/', (req, res) => {
 
 // Starts the express server on port 5000
 app.listen(5000, () => console.log('Server started on port 5000'));
+
+module.exports = app;

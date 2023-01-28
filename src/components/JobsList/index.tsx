@@ -30,7 +30,7 @@ type Props = {
 
 const JobsList: React.FC<Props> = ({ companySearch, toggleRecent }) => {
   const { data, error, isLoading } = useQuery('jobsData', async () => {
-    const res = await fetch('/test/jobs');
+    const res = await fetch('/api/test/jobs');
     return res.json();
   });
 
